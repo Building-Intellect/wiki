@@ -11,13 +11,13 @@ class Controller extends \Controller {
 
 	public function index($f3) {
 		$this->_requireLogin(\Model\User::RANK_GUEST);
-
 		$page = new Model\Page;
 		$page->indent = 0;
 		$pages = $this->build_tree($page->find(array("deleted_date IS NULL"), array("order" => "name ASC")));
-
 		$f3->set("title", "Wiki");
 		$f3->set("pages", $pages);
+
+		$this->loadGroupsUsersProjects($f3);
 
 		$this->_render("wiki/view/index.html");
 	}
